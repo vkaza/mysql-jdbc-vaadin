@@ -27,16 +27,18 @@ public class VaadinUI extends UI {
     private TextField firstName = new TextField("First name");
     private TextField lastName = new TextField("Last name");
     private Button save = new Button("Save", e -> saveCustomer());
+    private TextField customerID = new TextField("Customer ID");
+    private Button find = new Button("Find", e -> find());
 
     @Override
     protected void init(VaadinRequest request) {
         updateGrid();
         grid.setColumns("firstName", "lastName");
         grid.addSelectionListener(e -> updateForm());
-
+        
         binder.bindInstanceFields(this);
 
-        VerticalLayout layout = new VerticalLayout(grid, firstName, lastName, save);
+        VerticalLayout layout = new VerticalLayout(customerID, find, grid, firstName, lastName, save);
         setContent(layout);
     }
 
@@ -65,6 +67,12 @@ public class VaadinUI extends UI {
     private void saveCustomer() {
         service.update(customer);
         updateGrid();
+    }
+    
+    private void find() {
+    	List<Customer> customers = service.findByID(customerID.getValue());
+        grid.setItems(customers);
+        setFormVisible(false);
     }
 
 }
