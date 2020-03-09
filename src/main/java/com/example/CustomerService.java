@@ -1,32 +1,30 @@
 package com.example;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.stereotype.Component;
-
+import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class CustomerService {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+@Service
+public class CustomerService{
 
-    public List<Customer> findAll() {
-        return jdbcTemplate.query("SELECT top 10 id, first_name, last_name FROM customers",
-                (rs, rowNum) -> new Customer(rs.getLong("id"), rs.getString("first_name"), rs.getString("last_name")));
-    }
-
-    public void update(Customer customer) {
-        jdbcTemplate.update("UPDATE customers SET first_name=?, last_name=? WHERE id=?",
-                customer.getFirstName(), customer.getLastName(), customer.getId());
-    }
+	
+	@Autowired
+	private CustomerRepository customerRepository;
+	
+	  public List<Customer> getAllCustomers() { 
+		  List<Customer> customers = new ArrayList<>();
+		  customerRepository.findAll().forEach(customers::add);
+		  return customers;
+		  }
+	  
+	  public Customer findCustomerByID(Long id) {
+		  return customerRepository.findOne(id);
+	  }
     
-    public List<Customer> findByID(String customerId) {
-    	 return jdbcTemplate.query("SELECT id, first_name, last_name FROM customers where id=?",
-    			 new Object[] { customerId }, 
-    			 (rs, rowNum) -> new Customer(rs.getLong("id"), rs.getString("first_name"), rs.getString("last_name")));                  
-    }
-    
+	  
+	  public Customer saveorUpdateCustomer(Customer customer) {
+		  return customerRepository.save(customer);
+	  }
 }

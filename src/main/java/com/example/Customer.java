@@ -1,39 +1,52 @@
 package com.example;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Customer {
 
-    private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-    private String firstName, lastName;
+	private String firstName;
 
-    public Customer(Long id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+	private String lastName;
 
-    public Long getId() {
-        return id;
-    }
+	protected Customer() {
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Customer(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Customer[id=%d, firstName='%s', lastName='%s']", id,
+				firstName, lastName);
+	}
 
 }

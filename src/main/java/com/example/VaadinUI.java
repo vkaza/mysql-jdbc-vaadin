@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,7 @@ public class VaadinUI extends UI {
     }
 
     private void updateGrid() {
-        List<Customer> customers = service.findAll();
+        List<Customer> customers = service.getAllCustomers();
         grid.setItems(customers);
         setFormVisible(false);
     }
@@ -65,12 +67,12 @@ public class VaadinUI extends UI {
     }
 
     private void saveCustomer() {
-        service.update(customer);
+        service.saveorUpdateCustomer(customer);
         updateGrid();
     }
-    
+  
     private void find() {
-    	List<Customer> customers = service.findByID(customerID.getValue());
+    	List<Customer> customers =  new ArrayList<Customer>(Arrays.asList(service.findCustomerByID(Long.valueOf(customerID.getValue()))));    	
         grid.setItems(customers);
         setFormVisible(false);
     }
