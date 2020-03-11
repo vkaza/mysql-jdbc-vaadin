@@ -1,5 +1,3 @@
-# MySQL and Vaadin integration example using Spring JDBC template
+MSSQL and Vaadin integration example using Spring data and H2DB
 
-This example shows how to build a web UI for an existing MySQL database using plain Java.
-
-See the complete guide at: [https://vaadin.com/blog/-/blogs/building-a-web-ui-for-mysql-databases-in-plain-java-](https://vaadin.com/blog/-/blogs/building-a-web-ui-for-mysql-databases-in-plain-java-).
+This example shows how to build a web UI with an embedded database using plain Java.
