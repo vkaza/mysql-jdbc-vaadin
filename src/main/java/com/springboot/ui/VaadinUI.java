@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.springboot.model.RaymondJamesInterview;
+import com.springboot.model.Interview;
 import com.springboot.service.InterviewService;
 import com.springboot.util.FormUtil;
 import com.vaadin.data.Binder;
@@ -20,6 +20,7 @@ import com.vaadin.ui.PopupView;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 @SpringUI
 public class VaadinUI extends UI {
@@ -30,18 +31,18 @@ public class VaadinUI extends UI {
 	@Autowired
 	private FormUtil formUtil;
 
-	private RaymondJamesInterview raymondJamesInterview;
+	private Interview interview;
 
-	private Binder<RaymondJamesInterview> binder = new Binder<>(RaymondJamesInterview.class);
+	private Binder<Interview> binder = new Binder<>(Interview.class);
 
-	private Grid<RaymondJamesInterview> grid = new Grid<RaymondJamesInterview>(RaymondJamesInterview.class);
+	private Grid<Interview> grid = new Grid<Interview>(Interview.class);
 	private TextField howAreYou = new TextField();
 	private Button save = new Button("Save", e -> saveInterviewer());
 	private TextField InterviewerID = new TextField("Find ID");
 	private Button find = new Button("Find", e -> find());
 	private Button reset = new Button("Reset Form", e -> updateGrid());
 	private PopupView popUp = new PopupView();
-	private Label welcome = new Label ("RAYMOND JAMES INTERVIEW");
+	private Label welcome = new Label ("CAPITAL ONE INTERVIEW");
 
 	@Override
 	protected void init(VaadinRequest request) {
@@ -50,6 +51,7 @@ public class VaadinUI extends UI {
 		grid.setWidth("1200px");
 		grid.addSelectionListener(e -> updateForm());	
 		binder.bindInstanceFields(this);
+		welcome.addStyleName(ValoTheme.LABEL_H1);
 		VerticalLayout layout = new VerticalLayout(welcome, InterviewerID, find, reset, popUp, grid, howAreYou, save);
 		layout.setComponentAlignment(welcome, Alignment.TOP_CENTER);
 		reset.setVisible(false);
@@ -57,8 +59,8 @@ public class VaadinUI extends UI {
 	}
 
 	private void updateGrid() {
-		List<RaymondJamesInterview> raymondJamesInterviews = service.getAllInterviews();
-		grid.setItems(raymondJamesInterviews);
+		List<Interview> interviews = service.getAllInterviews();
+		grid.setItems(interviews);
 		setFormVisible(false);
 		reset.setVisible(false);
 		InterviewerID.clear();
@@ -69,8 +71,8 @@ public class VaadinUI extends UI {
 		if (grid.asSingleSelect().isEmpty()) {
 			setFormVisible(false);
 		} else {
-			raymondJamesInterview = grid.asSingleSelect().getValue();
-			binder.setBean(raymondJamesInterview);
+			interview = grid.asSingleSelect().getValue();
+			binder.setBean(interview);
 			setFormVisible(true);
 		}
 	}
@@ -83,16 +85,16 @@ public class VaadinUI extends UI {
 	}
 
 	private void saveInterviewer() {
-		service.saveorUpdateInterviewer(raymondJamesInterview);
+		service.saveorUpdateInterviewer(interview);
 		updateGrid();
 	}
 
 	private void find() {
 		if (formUtil.isNumeric(InterviewerID.getValue())) {
-			List<RaymondJamesInterview> raymondJamesInterviews = new ArrayList<RaymondJamesInterview>(
+			List<Interview> interviews = new ArrayList<Interview>(
 					Arrays.asList(service.findInterviewerByID(Long.valueOf(InterviewerID.getValue()))));
-			if (raymondJamesInterviews.get(0) != null) {
-				grid.setItems(raymondJamesInterviews);
+			if (interviews.get(0) != null) {
+				grid.setItems(interviews);
 				setFormVisible(false);
 				reset.setVisible(true);
 				popUp.setVisible(false);

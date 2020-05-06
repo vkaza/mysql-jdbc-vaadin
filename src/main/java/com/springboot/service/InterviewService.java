@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.springboot.model.RaymondJamesInterview;
+import com.springboot.model.Interview;
 import com.springboot.repository.InterviewRepository;
 
 @Service
@@ -18,18 +18,18 @@ public class InterviewService{
 	@Autowired
 	private InterviewRepository interviewRepository;
 	
-	  public List<RaymondJamesInterview> getAllInterviews() { 
-		  List<RaymondJamesInterview> raymondJamesInterviews = new ArrayList<>();
-		  interviewRepository.findAll().forEach(raymondJamesInterviews::add);
-		  return raymondJamesInterviews;
+	  public List<Interview> getAllInterviews() { 
+		  List<Interview> interviews = new ArrayList<>();
+		  interviewRepository.findAll().forEach(interviews::add);
+		  return interviews;
 		  }
 	  
-	  public RaymondJamesInterview findInterviewerByID(Long id) {
+	  public Interview findInterviewerByID(Long id) {
 		  return interviewRepository.findOne(id);
 	  }
     
 	  
-	  public RaymondJamesInterview saveorUpdateInterviewer(RaymondJamesInterview raymondJamesInterview) {
-		  return interviewRepository.save(raymondJamesInterview);
+	  public Interview saveorUpdateInterviewer(Interview interview) {
+		  return interviewRepository.save(interview);
 	  }
 }

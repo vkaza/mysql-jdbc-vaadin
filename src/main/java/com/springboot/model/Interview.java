@@ -9,8 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="RAYMOND_JAMES_INTERVIEW")
-public class RaymondJamesInterview {
+@Table(name="INTERVIEW")
+public class Interview {
 
 	@Id
 	@GeneratedValue
@@ -36,10 +36,10 @@ public class RaymondJamesInterview {
 	private String howAreYou;
 
 	
-	protected RaymondJamesInterview() {
+	protected Interview() {
 	}
 
-	public RaymondJamesInterview(Date interviewStartTime, Date interviewEndTime, String firstName, String lastName,
+	public Interview(Date interviewStartTime, Date interviewEndTime, String firstName, String lastName,
 			String title, String howAreYou) {
 		this.interviewStartTime = interviewStartTime;
 		this.interviewEndTime = interviewEndTime;
